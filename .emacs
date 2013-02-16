@@ -1,5 +1,8 @@
 (setq debug-on-error t)
 
+;; iimage mode
+(iimage-mode)
+
 ;; color-theme
 (require 'color-theme)
 (color-theme-initialize)
@@ -15,6 +18,20 @@
 
 ;; load org
 (require 'org)
+
+;; add [[img:logo.png][logo]] support
+(defun org-custom-link-img-follow (path)
+  (org-open-file-with-emacs  path))
+(defun org-custom-link-img-export (path desc format)
+  (cond
+   ((eq format 'html)
+    (format "<img src=\"/%s\" alt=\"%s\"/>"
+            (replace-regexp-in-string "^\\(\\.\\./\\|\\./\\)+" ""  path)
+            desc))))
+(org-add-link-type "img" 'org-custom-link-img-follow 'org-custom-link-img-export)
+
+(add-to-list 'iimage-mode-image-regex-alist
+             (cons (concat "\\[\\[img:\\(~?" iimage-mode-image-filename-regex "\\)\\]") 1))
 
 ;; org-mode project define
 (setq org-publish-project-alist
@@ -56,3 +73,23 @@
 ;; weibo
 (add-to-list 'load-path "~/.emacs.d/weibo.emacs/")
 (require 'weibo)
+
+;; ibus-mode
+(require 'ibus)
+(add-hook 'after-init-hook 'ibus-mode-on)
+(global-set-key (kbd "C-\\") 'ibus-toggle)
+
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(tool-bar-mode nil)
+ '(tooltip-mode nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
