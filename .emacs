@@ -3,35 +3,24 @@
 ;; iimage mode
 (iimage-mode)
 
-;; color-theme
+;;color theme
 (require 'color-theme)
 (color-theme-initialize)
 (color-theme-pok-wob)
 
-;; .emacs -- Emacs::PDE
+;; -- Emacs::PDE
 (add-to-list 'load-path "~/.emacs.d/pde/")
 (load "pde-load")
 
 ;; yasnippet -- Yet another snippet
+(add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-0.8.0/")
 (require 'yasnippet)
-(yas/initialize)
+(yas-global-mode 1)
 
 ;; load org
 (require 'org)
 
-;; add [[img:logo.png][logo]] support
-(defun org-custom-link-img-follow (path)
-  (org-open-file-with-emacs  path))
-(defun org-custom-link-img-export (path desc format)
-  (cond
-   ((eq format 'html)
-    (format "<img src=\"/%s\" alt=\"%s\"/>"
-            (replace-regexp-in-string "^\\(\\.\\./\\|\\./\\)+" ""  path)
-            desc))))
-(org-add-link-type "img" 'org-custom-link-img-follow 'org-custom-link-img-export)
-
-(add-to-list 'iimage-mode-image-regex-alist
-             (cons (concat "\\[\\[img:\\(~?" iimage-mode-image-filename-regex "\\)\\]") 1))
+(require 'htmlize)
 
 ;; org-mode project define
 (setq org-publish-project-alist
@@ -59,6 +48,8 @@
          :publishing-function org-publish-attachment)
         ("blog" :components ("org-blog-content" "org-blog-static"))
         ))
+
+(setq org-src-fontify-natively t)
 ;; active Babel languages
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -68,25 +59,50 @@
    (perl . t)
    (python .t)
    ))
-(setq org-src-fontify-natively t)
+;; add [[img:logo.png][logo]] support
+(defun org-custom-link-img-follow (path)
+  (org-open-file-with-emacs  path))
+(defun org-custom-link-img-export (path desc format)
+  (cond
+   ((eq format 'html)
+    (format "<img src=\"/%s\" alt=\"%s\"/>"
+            (replace-regexp-in-string "^\\(\\.\\./\\|\\./\\)+" ""  path)
+            desc))))
+(org-add-link-type "img" 'org-custom-link-img-follow 'org-custom-link-img-export)
+
+(add-to-list 'iimage-mode-image-regex-alist
+             (cons (concat "\\[\\[img:\\(~?" iimage-mode-image-filename-regex "\\)\\]") 1))
 
 ;; weibo
-(add-to-list 'load-path "~/.emacs.d/weibo.emacs/")
-(require 'weibo)
+;(add-to-list 'load-path "~/.emacs.d/weibo.emacs/")
+;(require 'weibo)
 
 ;; ibus-mode
-(require 'ibus)
-(add-hook 'after-init-hook 'ibus-mode-on)
-(global-set-key (kbd "C-\\") 'ibus-toggle)
+;;(require 'ibus)
+;;(add-hook 'after-init-hook 'ibus-mode-on)
+;;(global-set-key (kbd "C-\\") 'ibus-toggle)
 
 
+;(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ ;'(tool-bar-mode nil)
+; '(tooltip-mode nil))
+;(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ ;)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(tool-bar-mode nil)
- '(tooltip-mode nil))
+ '(menu-bar-mode nil)
+ '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
