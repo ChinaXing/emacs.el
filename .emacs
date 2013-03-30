@@ -20,6 +20,8 @@
 ;; load org
 (require 'org)
 
+;; need by org-babel export src highlight
+(add-to-list 'load-path "~/.emacs.d/")
 (require 'htmlize)
 
 ;; org-mode project define
