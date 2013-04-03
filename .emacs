@@ -4,9 +4,10 @@
 (iimage-mode)
 
 ;;color theme
+(add-to-list 'load-path "~/.emacs.d/color-theme-6.6.0")
 (require 'color-theme)
 (color-theme-initialize)
-(color-theme-pok-wob)
+(color-theme-Arjen)
 
 ;; -- Emacs::PDE
 (add-to-list 'load-path "~/.emacs.d/pde/")
