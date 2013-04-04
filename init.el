@@ -1,4 +1,7 @@
 (setq debug-on-error t)
+;; do not load pacakge after init, but NOW
+(setq package-enable-at-startup nil)
+(package-initialize)
 
 ;; iimage mode
 (iimage-mode)
@@ -7,22 +10,22 @@
 (add-to-list 'load-path "~/.emacs.d/color-theme-6.6.0")
 (require 'color-theme)
 (color-theme-initialize)
-(color-theme-Arjen)
+(color-theme-arjen)
 
 ;; -- Emacs::PDE
-(add-to-list 'load-path "~/.emacs.d/pde/")
+(add-to-list 'load-path "~/.emacs.d/pde")
 (load "pde-load")
 
 ;; yasnippet -- Yet another snippet
-(add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-0.8.0/")
-(require 'yasnippet)
-(yas-global-mode 1)
+;;(add-to-list 'load-path ".emacs.d/elpa/yasnippet-0.8.0")
+;;(require 'yasnippet)
+;;(yas-global-mode 1)
 
 ;; load org
 (require 'org)
 
 ;; need by org-babel export src highlight
-(add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "~/.emacs.d")
 (require 'htmlize)
 
 ;; org-mode project define
@@ -76,29 +79,12 @@
 (add-to-list 'iimage-mode-image-regex-alist
              (cons (concat "\\[\\[img:\\(~?" iimage-mode-image-filename-regex "\\)\\]") 1))
 
-;; weibo
-;(add-to-list 'load-path "~/.emacs.d/weibo.emacs/")
-;(require 'weibo)
-
 ;; ibus-mode
 ;;(require 'ibus)
 ;;(add-hook 'after-init-hook 'ibus-mode-on)
 ;;(global-set-key (kbd "C-\\") 'ibus-toggle)
 
 
-;(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- ;'(tool-bar-mode nil)
-; '(tooltip-mode nil))
-;(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- ;)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
