@@ -14,12 +14,13 @@
 
 ;; -- Emacs::PDE
 (add-to-list 'load-path "~/.emacs.d/pde")
-(load "pde-load")
+(add-hook 'cperl-mode-hook '(lambda () (load "pde-load")))
 
 ;; yasnippet -- Yet another snippet
 ;;(add-to-list 'load-path ".emacs.d/elpa/yasnippet-0.8.0")
 ;;(require 'yasnippet)
 ;;(yas-global-mode 1)
+(add-hook 'cperl-mode-hook '(lambda () (yas-minor-mode)))
 
 ;; load org
 (require 'org)
