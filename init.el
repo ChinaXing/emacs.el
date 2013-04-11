@@ -1,4 +1,10 @@
 (setq debug-on-error t)
+
+;; default coding-system :utf-8
+(prefer-coding-system 'utf-8)
+(setq coding-system-for-read 'utf-8)
+(setq coding-system-for-write 'utf-8)
+
 ;; do not load pacakge after init, but NOW
 (setq package-enable-at-startup nil)
 (package-initialize)
