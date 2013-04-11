@@ -1,9 +1,19 @@
 (setq debug-on-error t)
 
+;; uniquify buffer
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
+
+;; hightlight current line
+(hl-line-mode)
+
 ;; default coding-system :utf-8
 (prefer-coding-system 'utf-8)
 (setq coding-system-for-read 'utf-8)
 (setq coding-system-for-write 'utf-8)
+
+;; use hippie-expand
+(global-set-key (kbd "M-/") 'hippie-expand)
 
 ;; do not load pacakge after init, but NOW
 (setq package-enable-at-startup nil)
@@ -91,17 +101,3 @@
 ;;(add-hook 'after-init-hook 'ibus-mode-on)
 ;;(global-set-key (kbd "C-\\") 'ibus-toggle)
 
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(menu-bar-mode nil)
- '(tool-bar-mode nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
