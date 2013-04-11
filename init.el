@@ -5,7 +5,7 @@
 (setq uniquify-buffer-name-style 'forward)
 
 ;; hightlight current line
-(hl-line-mode)
+(global-hl-line-mode)
 
 ;; default coding-system :utf-8
 (prefer-coding-system 'utf-8)
