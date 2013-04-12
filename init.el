@@ -1,5 +1,10 @@
 (setq debug-on-error t)
 
+;; EasyPG
+(require 'epa-file)
+(epa-file-enable)
+(setq epa-file-encrypt-to nil)
+
 ;; uniquify buffer
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
