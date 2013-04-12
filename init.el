@@ -1,5 +1,15 @@
 (setq debug-on-error t)
 
+;; ELPA: http://melpa.milkbox.net/
+(require 'package)
+(add-to-list 'package-archives
+	     '("melpa" . 
+	       "http://melpa.milkbox.net/packages/") t)
+;; ELPA: http://marmalade-repo.org/
+(add-to-list 'package-archives
+             '("marmalade" .
+               "http://marmalade-repo.org/packages/") t)
+
 ;; EasyPG
 (require 'epa-file)
 (epa-file-enable)
@@ -28,26 +38,23 @@
 (iimage-mode)
 
 ;;color theme
-(add-to-list 'load-path "~/.emacs.d/color-theme-6.6.0")
 (require 'color-theme)
 (color-theme-initialize)
-(color-theme-arjen)
+(color-theme-billw)
+
+;; -- Perl
+(defalias 'perl-mode 'cperl-mode)
 
 ;; -- Emacs::PDE
-(add-to-list 'load-path "~/.emacs.d/pde")
 (add-hook 'cperl-mode-hook '(lambda () (load "pde-load")))
 
 ;; yasnippet -- Yet another snippet
-;;(add-to-list 'load-path ".emacs.d/elpa/yasnippet-0.8.0")
-;;(require 'yasnippet)
-;;(yas-global-mode 1)
 (add-hook 'cperl-mode-hook '(lambda () (yas-minor-mode)))
 
 ;; load org
 (require 'org)
 
 ;; need by org-babel export src highlight
-(add-to-list 'load-path "~/.emacs.d")
 (require 'htmlize)
 
 ;; org-mode project define
@@ -105,4 +112,3 @@
 ;;(require 'ibus)
 ;;(add-hook 'after-init-hook 'ibus-mode-on)
 ;;(global-set-key (kbd "C-\\") 'ibus-toggle)
-
