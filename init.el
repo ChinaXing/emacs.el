@@ -51,6 +51,15 @@
 ;; yasnippet -- Yet another snippet
 (add-hook 'cperl-mode-hook '(lambda () (yas-minor-mode)))
 
+;; shortcut
+;; 1. indent buffer
+(defun indent-buffer ()
+  "Indent the current buffer"
+  (interactive)
+  (save-excursion (indent-region (point-min) (point-max) nil))
+)
+(global-set-key [f12] 'indent-buffer)
+
 ;; load org
 (require 'org)
 
