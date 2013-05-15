@@ -51,6 +51,10 @@
 ;; yasnippet -- Yet another snippet
 (add-hook 'cperl-mode-hook '(lambda () (yas-minor-mode)))
 
+;; web-mode
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html.ep\\'" . web-mode))
+
 ;; shortcut
 ;; 1. indent buffer
 (defun indent-buffer ()
