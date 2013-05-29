@@ -10,6 +10,8 @@ Packages dependent
 - markdown-mode
 - htmlize
 - yasnippet
+- PDE ( perl-development environment )
+- flyspell-mode ( built-in, depend on ispell CLI tool)
 - org-mode ( built-in )
 - cperl-mode ( built-in )
 - iimage-mode ( built-in )

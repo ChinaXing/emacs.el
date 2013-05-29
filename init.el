@@ -40,7 +40,7 @@
 ;;color theme
 (require 'color-theme)
 (color-theme-initialize)
-(color-theme-billw)
+(color-theme-hober)
 
 ;; -- Perl
 (defalias 'perl-mode 'cperl-mode)
@@ -61,8 +61,13 @@
   "Indent the current buffer"
   (interactive)
   (save-excursion (indent-region (point-min) (point-max) nil))
-)
+  )
 (global-set-key [f12] 'indent-buffer)
+
+;; etags tags-table-list
+(setq tags-table-list
+      '("./TAGS" "../TAGS" "../../TAGS" "../../../TAGS")
+      )
 
 ;; load org
 (require 'org)
