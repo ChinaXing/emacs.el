@@ -103,6 +103,9 @@
         ))
 
 (setq org-src-fontify-natively t)
+
+(setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
+
 ;; active Babel languages
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -110,23 +113,9 @@
    (emacs-lisp . t)
    (sh . t)
    (perl . t)
-   (python .t)
+   (python . t)
+   (R . t)
+   (ditaa . t)
    ))
-;; add [[img:logo.png][logo]] support
-(defun org-custom-link-img-follow (path)
-  (org-open-file-with-emacs  path))
-(defun org-custom-link-img-export (path desc format)
-  (cond
-   ((eq format 'html)
-    (format "<img src=\"/%s\" alt=\"%s\"/>"
-            (replace-regexp-in-string "^\\(\\.\\./\\|\\./\\)+" ""  path)
-            desc))))
-(org-add-link-type "img" 'org-custom-link-img-follow 'org-custom-link-img-export)
 
-(add-to-list 'iimage-mode-image-regex-alist
-             (cons (concat "\\[\\[img:\\(~?" iimage-mode-image-filename-regex "\\)\\]") 1))
-
-;; ibus-mode
-;;(require 'ibus)
-;;(add-hook 'after-init-hook 'ibus-mode-on)
-;;(global-set-key (kbd "C-\\") 'ibus-toggle)
+(put 'dired-find-alternate-file 'disabled nil)
