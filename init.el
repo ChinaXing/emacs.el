@@ -1,61 +1,94 @@
 (setq debug-on-error t)
-
-;; ELPA: http://melpa.milkbox.net/
-(require 'package)
-(add-to-list 'package-archives
-	     '("melpa" . 
-	       "http://melpa.milkbox.net/packages/") t)
-;; ELPA: http://marmalade-repo.org/
-(add-to-list 'package-archives
-             '("marmalade" .
-               "http://marmalade-repo.org/packages/") t)
-
-;; EasyPG
-(require 'epa-file)
-(epa-file-enable)
-(setq epa-file-encrypt-to nil)
-
-;; uniquify buffer
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'forward)
-
-;; hightlight current line
-(global-hl-line-mode)
-
+;;-----------------------------------------------------
+;; emacs core settings 
+;;-----------------------------------------------------
+(put 'dired-find-alternate-file 'disabled nil)
 ;; default coding-system :utf-8
 (prefer-coding-system 'utf-8)
 (setq coding-system-for-read 'utf-8)
 (setq coding-system-for-write 'utf-8)
+;;------------------------------------------------------
+;; auto-install
+;;------------------------------------------------------
+(add-to-list 'load-path "~/.emacs.d/auto-install/")
 
-;; use hippie-expand
+;;------------------------------------------------------
+;; package system
+;;------------------------------------------------------
+(require 'package)
+(setq package-archives '(
+;; GNU
+			 ("gnu" . "http://elpa.gnu.org/packages/")
+;; ELPA: http://melpa.milkbox.net/
+			 ("melpa" . "http://melpa.milkbox.net/packages/")
+;; ELPA: http://marmalade-repo.org/
+			 ("marmalade" . "http://marmalade-repo.org/packages/")))
+
+;;-------------------------------------------------------
+;; securty
+;;-------------------------------------------------------
+;;EasyPG
+(require 'epa-file)
+(epa-file-enable)
+(setq epa-file-encrypt-to nil)
+
+;;-------------------------------------------------------
+;; yasnippet-bundle -- Yet another snippet
+;;-------------------------------------------------------
+(add-hook 'after-init-hook '(lambda () (yas/global-mode 0)))
+
+;;-------------------------------------------------------
+;; uniquify buffer
+;;-------------------------------------------------------
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
+;;-------------------------------------------------------
+;; hightlight current line
+;;-------------------------------------------------------
+(global-hl-line-mode)
+
+;;-------------------------------------------------------
+;; hippie-expand
+;;-------------------------------------------------------
 (global-set-key (kbd "M-/") 'hippie-expand)
 
-;; do not load pacakge after init, but NOW
-(setq package-enable-at-startup nil)
-(package-initialize)
-
+;;-------------------------------------------------------
 ;; iimage mode
+;;-------------------------------------------------------
 (iimage-mode)
 
+;;-------------------------------------------------------
 ;;color theme
-(require 'color-theme)
-(color-theme-initialize)
-(color-theme-hober)
+;;-------------------------------------------------------
+(add-hook 'after-init-hook (lambda () 
+			     (color-theme-initialize)
+			     (color-theme-hober)
+))
 
-;; -- Perl
+;;-------------------------------------------------------
+;; Perl
+;;-------------------------------------------------------
 (defalias 'perl-mode 'cperl-mode)
-
 ;; -- Emacs::PDE
-(add-hook 'cperl-mode-hook '(lambda () (load "pde-load")))
+(add-hook 'cperl-mode-hook '(lambda () (load "pde-load") (abbrev-mode 0)))
+(add-hook 'cperl-mode-hook '(lambda () (yas/minor-mode)))
+(add-hook 'cperl-mode-hook '(lambda () (require 'perl-completion) (perl-completion-mode t)))
+(add-hook 'cperl-mode-hook '(lambda () 
+			      (when (require 'auto-complete nil t)
+				(auto-complete-mode t)
+				(make-variable-buffer-local 'ac-sources)
+				(setq ac-sources
+				      '(ac-source-perl-completion)))))
 
-;; yasnippet -- Yet another snippet
-(add-hook 'cperl-mode-hook '(lambda () (yas-minor-mode)))
-
+;;--------------------------------------------------------
 ;; web-mode
+;;--------------------------------------------------------
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html.ep\\'" . web-mode))
 
+;;---------------------------------------------------------
 ;; shortcut
+;;---------------------------------------------------------
 ;; 1. indent buffer
 (defun indent-buffer ()
   "Indent the current buffer"
@@ -69,11 +102,12 @@
       '("./TAGS" "../TAGS" "../../TAGS" "../../../TAGS")
       )
 
-;; load org
+;;-----------------------------------------------------------
+;; org mode
+;;-----------------------------------------------------------
 (require 'org)
 
 ;; need by org-babel export src highlight
-(require 'htmlize)
 
 ;; org-mode project define
 (setq org-publish-project-alist
@@ -118,4 +152,18 @@
    (ditaa . t)
    ))
 
-(put 'dired-find-alternate-file 'disabled nil)
+;;------------------------------------------------------------
+;; custom
+;;------------------------------------------------------------
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes (quote ("3d6b08cd1b1def3cc0bc6a3909f67475e5612dba9fa98f8b842433d827af5d30" "24cb1b9c182198f52df7cebf378ee9ecca93a2daeb9a90049a2f1f556119c742" default))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
