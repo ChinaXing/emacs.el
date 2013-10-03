@@ -85,6 +85,7 @@
 ;;--------------------------------------------------------
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html.ep\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
 
 ;;---------------------------------------------------------
 ;; shortcut
@@ -124,6 +125,7 @@
          :headline-levels 4
          :html-extension "html"
          :table-of-contents t
+         :section-numbers nil
          :body-only t ;; Only export section between <body></body>
          )
 
