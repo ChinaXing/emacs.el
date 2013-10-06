@@ -154,6 +154,21 @@
    (ditaa . t)
    ))
 
+;; insert date/date-time
+(defun insert-date (prefix)
+  "Insert the current date. with prefix-argument
+   if prefix is date, insert date only
+   else insert date and time ( default )
+  "
+  (interactive "P")
+  (let ((format (cond
+		 ((not prefix) "%Y-%m-%d %H:%M:%S")
+		 ((equal prefix '(4)) "%Y-%m-%d")
+		 ((equal prefix '(16)) "%Y-%m-%dT%H:%M:%S"))))
+  (insert (format-time-string format))))
+
+(global-set-key (kbd "C-c d") 'insert-date)
+
 ;;------------------------------------------------------------
 ;; custom
 ;;------------------------------------------------------------
