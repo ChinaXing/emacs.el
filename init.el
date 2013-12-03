@@ -119,7 +119,7 @@
          :base-extension "org"
 
          ;; Path to your HiD project.
-         :publishing-directory "~/ChinaXing.org/HiD/"
+         :publishing-directory "~/ChinaXing.org/wintersmith/contents"
          :recursive t
          :publishing-function org-publish-org-to-html
          :headline-levels 4
@@ -132,7 +132,7 @@
         ("org-blog-static"
          :base-directory "~/ChinaXing.org/org/"
          :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php\\|svg"
-         :publishing-directory "~/ChinaXing.org/HiD/"
+         :publishing-directory "~/ChinaXing.org/wintersmith/contents"
          :recursive t
          :publishing-function org-publish-attachment)
         ("blog" :components ("org-blog-content" "org-blog-static"))
