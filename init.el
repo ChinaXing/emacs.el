@@ -7,6 +7,11 @@
 (prefer-coding-system 'utf-8)
 (setq coding-system-for-read 'utf-8)
 (setq coding-system-for-write 'utf-8)
+
+(column-number-mode 1)
+(display-time)
+(menu-bar-mode -1)
+
 ;;------------------------------------------------------
 ;; auto-install
 ;;------------------------------------------------------
@@ -16,18 +21,18 @@
 ;; package system
 ;;------------------------------------------------------
 (require 'package)
-(setq package-archives '(
-;; GNU
-			 ("gnu" . "http://elpa.gnu.org/packages/")
-;; ELPA: http://melpa.milkbox.net/
-			 ("melpa" . "http://melpa.milkbox.net/packages/")
-;; ELPA: http://marmalade-repo.org/
-			 ("marmalade" . "http://marmalade-repo.org/packages/")))
+(package-initialize)
+(setq package-archives 
+      '(
+	("gnu" . "http://elpa.gnu.org/packages/")
+	("melpa" . "http://melpa.milkbox.net/packages/")
+	("marmalade" . "http://marmalade-repo.org/packages/")))
+;;-------------------------------------------------------
+;; crosshairs when idle
+;;-------------------------------------------------------
+(require 'crosshairs)
+(toggle-crosshairs-when-idle 1)
 
-;;-------------------------------------------------------
-;; securty
-;;-------------------------------------------------------
-;;EasyPG
 (require 'epa-file)
 (epa-file-enable)
 (setq epa-file-encrypt-to nil)
@@ -42,10 +47,6 @@
 ;;-------------------------------------------------------
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
-;;-------------------------------------------------------
-;; hightlight current line
-;;-------------------------------------------------------
-(global-hl-line-mode)
 
 ;;-------------------------------------------------------
 ;; hippie-expand
@@ -90,11 +91,33 @@
 ;;---------------------------------------------------------
 ;; Haskell Indent
 ;;---------------------------------------------------------
-(add-hook 'haskell-mode-hook '(lambda () (haskell-indent-mode)))
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+
+(add-hook 'haskell-mode-hook 'structured-haskell-mode)
+
+(eval-after-load "haskell-mode"
+  '(progn
+     (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
+     (define-key haskell-mode-map (kbd "M-`") 'haskell-interactive-bring)
+     (define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
+     (define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
+     (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
+     (define-key haskell-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
+     (define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
+     (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
+     (define-key haskell-mode-map (kbd "C-,") 'haskell-move-nested-left)
+     (define-key haskell-mode-map (kbd "C-.") 'haskell-move-nested-right)))
+
+(add-hook 'structured-haskell-mode-hook
+  '(lambda() 
+     (progn 	  
+       (require 'shm-case-split)
+       (define-key shm-map (kbd "C-c C-s") 'shm/case-split))))
 ;;---------------------------------------------------------
 ;; shortcut
 ;;---------------------------------------------------------
-;; 1. indent buffer
 (defun indent-buffer ()
   "Indent the current buffer"
   (interactive)
@@ -106,13 +129,25 @@
 (setq tags-table-list
       '("./TAGS" "../TAGS" "../../TAGS" "../../../TAGS")
       )
+;; insert date/date-time
+(defun insert-date (prefix)
+  "Insert the current date. with prefix-argument
+   if prefix is date, insert date only
+   else insert date and time ( default )
+  "
+  (interactive "P")
+  (let ((format (cond
+		 ((not prefix) "%Y-%m-%d %H:%M:%S")
+		 ((equal prefix '(4)) "%Y-%m-%d")
+		 ((equal prefix '(16)) "%Y-%m-%dT%H:%M:%S"))))
+  (insert (format-time-string format))))
+
+(global-set-key (kbd "C-c d") 'insert-date)
 
 ;;-----------------------------------------------------------
 ;; org mode
 ;;-----------------------------------------------------------
 (require 'org)
-
-;; need by org-babel export src highlight
 
 ;; org-mode project define
 (setq org-publish-project-alist
@@ -146,6 +181,10 @@
 
 (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
 
+(add-hook 'org-mode-hook
+  (lambda () 
+    (define-key org-mode-map (kbd "C-c C-p") 'org-publish-current-project)))
+
 ;; active Babel languages
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -157,21 +196,6 @@
    (R . t)
    (ditaa . t)
    ))
-
-;; insert date/date-time
-(defun insert-date (prefix)
-  "Insert the current date. with prefix-argument
-   if prefix is date, insert date only
-   else insert date and time ( default )
-  "
-  (interactive "P")
-  (let ((format (cond
-		 ((not prefix) "%Y-%m-%d %H:%M:%S")
-		 ((equal prefix '(4)) "%Y-%m-%d")
-		 ((equal prefix '(16)) "%Y-%m-%dT%H:%M:%S"))))
-  (insert (format-time-string format))))
-
-(global-set-key (kbd "C-c d") 'insert-date)
 
 ;;------------------------------------------------------------
 ;; custom
