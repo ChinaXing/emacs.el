@@ -111,10 +111,11 @@
      (define-key haskell-mode-map (kbd "C-.") 'haskell-move-nested-right)))
 
 (add-hook 'structured-haskell-mode-hook
-  '(lambda() 
-     (progn 	  
-       (require 'shm-case-split)
-       (define-key shm-map (kbd "C-c C-s") 'shm/case-split))))
+	  '(lambda() 
+	     (progn 	  
+	       (require 'shm-case-split)
+	       (define-key shm-map (kbd "C-c C-s") 'shm/case-split))))
+
 ;;---------------------------------------------------------
 ;; shortcut
 ;;---------------------------------------------------------
@@ -131,10 +132,6 @@
       )
 ;; insert date/date-time
 (defun insert-date (prefix)
-  "Insert the current date. with prefix-argument
-   if prefix is date, insert date only
-   else insert date and time ( default )
-  "
   (interactive "P")
   (let ((format (cond
 		 ((not prefix) "%Y-%m-%d %H:%M:%S")
@@ -203,7 +200,7 @@
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
+ ;; Your init file should contain only one such insnce.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes (quote ("3d6b08cd1b1def3cc0bc6a3909f67475e5612dba9fa98f8b842433d827af5d30" "24cb1b9c182198f52df7cebf378ee9ecca93a2daeb9a90049a2f1f556119c742" default))))
 (custom-set-faces
