@@ -7,3 +7,6 @@ abbrev_defs
 auto-install
 *.dat
 url/*
+/eshell/
+/srecode-map.el
+/tramp
