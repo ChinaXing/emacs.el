@@ -178,9 +178,37 @@
 
 (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
 
+(defun insert-project-article-head (prefix)
+  (interactive "P")
+  (let ((content (cond
+		  ((not prefix) "#+BEGIN_HTML
+---
+date: %s
+template: tech.jade
+title: 
+category: 
+chage_frequency: monthly
+tag: 
+---
+#+END_HTML
+")
+		  ((equal prefix '(4)) "#+BEGIN_HTML
+---
+date: %s
+template: article.jade
+title: 
+category: Life
+change_frequency: never
+---
+#+END_HTML
+")))
+	(dateNow (format-time-string "%Y-%m-%d %H:%M:%S")))
+    (insert (format content dateNow))))
+
 (add-hook 'org-mode-hook
   (lambda () 
-    (define-key org-mode-map (kbd "C-c C-p") 'org-publish-current-project)))
+    (define-key org-mode-map (kbd "C-c C-p") 'org-publish-current-project)
+    (define-key org-mode-map (kbd "C-c C-h") 'insert-project-article-head)))
 
 ;; active Babel languages
 (org-babel-do-load-languages
