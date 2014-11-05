@@ -12,6 +12,9 @@
 (display-time)
 (menu-bar-mode -1)
 
+(setq calendar-latitude 30.2)
+(setq calendar-longitude  120.0)
+
 ;;------------------------------------------------------
 ;; auto-install
 ;;------------------------------------------------------
@@ -220,6 +223,7 @@ change_frequency: never
    (python . t)
    (R . t)
    (ditaa . t)
+   (dot . t)
    ))
 
 ;;------------------------------------------------------------
