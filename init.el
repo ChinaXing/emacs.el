@@ -33,17 +33,12 @@
 ;;-------------------------------------------------------
 ;; crosshairs when idle
 ;;-------------------------------------------------------
-(require 'crosshairs)
-(toggle-crosshairs-when-idle 1)
+;;(require 'crosshairs)
+;;(toggle-crosshairs-when-idle 1)
 
 (require 'epa-file)
 (epa-file-enable)
 (setq epa-file-encrypt-to nil)
-
-;;-------------------------------------------------------
-;; yasnippet-bundle -- Yet another snippet
-;;-------------------------------------------------------
-(add-hook 'after-init-hook '(lambda () (yas/global-mode 0)))
 
 ;;-------------------------------------------------------
 ;; uniquify buffer
@@ -84,6 +79,14 @@
 				(setq ac-sources
 				      '(ac-source-perl-completion)))))
 
+;; -------------------------------------------------------
+;; Dired-k
+;; -------------------------------------------------------
+(require 'dired-k)
+(define-key dired-mode-map (kbd "K") 'dired-k)
+
+;; You can use dired-k alternative to revert-buffer
+(define-key dired-mode-map (kbd "g") 'dired-k)
 ;;--------------------------------------------------------
 ;; web-mode
 ;;--------------------------------------------------------
@@ -94,30 +97,43 @@
 ;;---------------------------------------------------------
 ;; Haskell Indent
 ;;---------------------------------------------------------
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
-(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+;;(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 
 (add-hook 'haskell-mode-hook 'structured-haskell-mode)
 
 (eval-after-load "haskell-mode"
   '(progn
      (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
+     (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
      (define-key haskell-mode-map (kbd "M-`") 'haskell-interactive-bring)
-     (define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
-     (define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
-     (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
-     (define-key haskell-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
-     (define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
+     (define-key haskell-mode-map (kbd "C-c C-n C-t") 'haskell-process-do-type)
+     (define-key haskell-mode-map (kbd "C-c C-n C-i") 'haskell-process-do-info)
+     (define-key haskell-mode-map (kbd "C-c C-n C-c") 'haskell-process-cabal-build)
+     (define-key haskell-mode-map (kbd "C-c C-n C-k") 'haskell-interactive-mode-clear)
+     (define-key haskell-mode-map (kbd "C-c C-n c") 'haskell-process-cabal)
      (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
      (define-key haskell-mode-map (kbd "C-,") 'haskell-move-nested-left)
-     (define-key haskell-mode-map (kbd "C-.") 'haskell-move-nested-right)))
+     (define-key haskell-mode-map (kbd "C-.") 'haskell-move-nested-right)
+     (define-key haskell-mode-map (kbd "<f8>") 'haskell-navigate-imports)))
 
 (add-hook 'structured-haskell-mode-hook
 	  '(lambda() 
 	     (progn 	  
 	       (require 'shm-case-split)
 	       (define-key shm-map (kbd "C-c C-s") 'shm/case-split))))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes nil)
+ '(custom-safe-themes (quote ("3d6b08cd1b1def3cc0bc6a3909f67475e5612dba9fa98f8b842433d827af5d30" "24cb1b9c182198f52df7cebf378ee9ecca93a2daeb9a90049a2f1f556119c742" default)))
+ '(haskell-process-type (quote cabal-repl))
+ '(haskell-tags-on-save t))
+
 
 ;;---------------------------------------------------------
 ;; shortcut
@@ -177,6 +193,11 @@
         ("blog" :components ("org-blog-content" "org-blog-static"))
         ))
 
+(setq org-latex-to-pdf-process
+      '("xelatex -interaction nonstopmode -output-directory %o %f"
+	"xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"))
+
 (setq org-src-fontify-natively t)
 
 (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
@@ -229,12 +250,7 @@ change_frequency: never
 ;;------------------------------------------------------------
 ;; custom
 ;;------------------------------------------------------------
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such insnce.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("3d6b08cd1b1def3cc0bc6a3909f67475e5612dba9fa98f8b842433d827af5d30" "24cb1b9c182198f52df7cebf378ee9ecca93a2daeb9a90049a2f1f556119c742" default))))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
