@@ -3,6 +3,7 @@
 ;; emacs core settings 
 ;;-----------------------------------------------------
 (put 'dired-find-alternate-file 'disabled nil)
+(setq inhibit-splash-screen t)
 ;; default coding-system :utf-8
 (prefer-coding-system 'utf-8)
 (setq coding-system-for-read 'utf-8)
