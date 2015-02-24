@@ -4,6 +4,8 @@
 ;;-----------------------------------------------------
 (put 'dired-find-alternate-file 'disabled nil)
 (setq inhibit-splash-screen t)
+(setq default-directory "~/ChinaXing.org")
+(setq initial-buffer-choice default-directory)
 ;; default coding-system :utf-8
 (prefer-coding-system 'utf-8)
 (setq coding-system-for-read 'utf-8)
@@ -26,6 +28,14 @@
 ;;------------------------------------------------------
 (require 'package)
 (package-initialize)
+;;------------------------------------------------------
+;; PATH
+;;------------------------------------------------------
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize)
+  (setq mac-option-modifier 'meta)
+  (setq mac-command-modifier 'super)
+  (global-set-key [kp-delete] 'delete-char)) ;; sets fn-delete to be right-delete
 (setq package-archives 
       '(
 	("gnu" . "http://elpa.gnu.org/packages/")
@@ -98,8 +108,8 @@
 ;;---------------------------------------------------------
 ;; Haskell Indent
 ;;---------------------------------------------------------
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-
+;; shm not recommend these mode, so commented
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 ;;(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 
 (add-hook 'haskell-mode-hook 'structured-haskell-mode)
@@ -131,9 +141,15 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes nil)
- '(custom-safe-themes (quote ("3d6b08cd1b1def3cc0bc6a3909f67475e5612dba9fa98f8b842433d827af5d30" "24cb1b9c182198f52df7cebf378ee9ecca93a2daeb9a90049a2f1f556119c742" default)))
+ '(custom-safe-themes
+   (quote
+    ("3d6b08cd1b1def3cc0bc6a3909f67475e5612dba9fa98f8b842433d827af5d30" "24cb1b9c182198f52df7cebf378ee9ecca93a2daeb9a90049a2f1f556119c742" default)))
  '(haskell-process-type (quote cabal-repl))
- '(haskell-tags-on-save t))
+ '(haskell-tags-on-save t)
+ '(safe-local-variable-values
+   (quote
+    ((haskell-process-use-ghci . t)
+     (haskell-indent-spaces . 4)))))
 
 
 ;;---------------------------------------------------------
@@ -174,10 +190,9 @@
          :base-directory "~/ChinaXing.org/org/"
          :base-extension "org"
 
-         ;; Path to your HiD project.
          :publishing-directory "~/ChinaXing.org/wintersmith/contents"
          :recursive t
-         :publishing-function org-publish-org-to-html
+         :publishing-function org-html-publish-to-html
          :headline-levels 4
          :html-extension "html"
          :table-of-contents t
@@ -203,6 +218,9 @@
 
 (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
 
+;; ----------------------------------------------------------------
+;; insert article title
+;; ----------------------------------------------------------------
 (defun insert-project-article-head (prefix)
   (interactive "P")
   (let ((content (cond
@@ -216,6 +234,8 @@ chage_frequency: monthly
 tag: 
 ---
 #+END_HTML
+#+OPTIONS: toc:nil
+#+TOC: headlines 2
 ")
 		  ((equal prefix '(4)) "#+BEGIN_HTML
 ---
@@ -258,3 +278,4 @@ change_frequency: never
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'upcase-region 'disabled nil)
