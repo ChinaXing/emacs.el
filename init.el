@@ -5,7 +5,10 @@
 (put 'dired-find-alternate-file 'disabled nil)
 (setq inhibit-splash-screen t)
 (setq default-directory "~/ChinaXing.org")
-(setq initial-buffer-choice default-directory)
+(add-hook 'after-init-hook (lambda ()
+			     (unless (cdr command-line-args)
+			       (setq initial-buffer-choice default-directory)
+			       )))
 ;; default coding-system :utf-8
 (prefer-coding-system 'utf-8)
 (setq coding-system-for-read 'utf-8)
