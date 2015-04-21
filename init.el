@@ -55,6 +55,11 @@
 (setq epa-file-encrypt-to nil)
 
 ;;-------------------------------------------------------
+;; rainbow
+;;-------------------------------------------------------
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
+;;-------------------------------------------------------
 ;; uniquify buffer
 ;;-------------------------------------------------------
 (require 'uniquify)
@@ -76,8 +81,12 @@
 (add-hook 'after-init-hook (lambda () 
 			     (color-theme-initialize)
 			     (color-theme-hober)
-))
-
+			     ))
+;;-------------------------------------------------------
+;; Erlang
+;;-------------------------------------------------------
+(setq erlang-root-dir "/opt/local/lib/erlang/")
+(add-to-list 'auto-mode-alist '("rebar.config\\'" . erlang-mode))
 ;;-------------------------------------------------------
 ;; Perl
 ;;-------------------------------------------------------
@@ -93,6 +102,11 @@
 				(setq ac-sources
 				      '(ac-source-perl-completion)))))
 
+;; -------------------------------------------------------
+;; linux kernel
+;; -------------------------------------------------------
+(setq c-default-style "linux")
+(require 'xcscope) ;; install cscope 
 ;; -------------------------------------------------------
 ;; Dired-k
 ;; -------------------------------------------------------
@@ -116,9 +130,9 @@
 ;;(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 
 (add-hook 'haskell-mode-hook 'structured-haskell-mode)
-
 (eval-after-load "haskell-mode"
   '(progn
+     (define-key haskell-mode-map (kbd "C-c C-h") 'haskell-hoogle)
      (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
      (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
      (define-key haskell-mode-map (kbd "M-`") 'haskell-interactive-bring)
@@ -134,7 +148,7 @@
 
 (add-hook 'structured-haskell-mode-hook
 	  '(lambda() 
-	     (progn 	  
+	     (progn
 	       (require 'shm-case-split)
 	       (define-key shm-map (kbd "C-c C-s") 'shm/case-split))))
 
@@ -218,7 +232,7 @@
         "xelatex -interaction nonstopmode -output-directory %o %f"))
 
 (setq org-src-fontify-natively t)
-
+(setq org-export-with-sub-superscripts nil)
 (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
 
 ;; ----------------------------------------------------------------
@@ -269,6 +283,7 @@ change_frequency: never
    (R . t)
    (ditaa . t)
    (dot . t)
+   (haskell . t)
    ))
 
 ;;------------------------------------------------------------
